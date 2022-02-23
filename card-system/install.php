@@ -43,7 +43,7 @@ foreach ($files as $file) {
 	}
 }
 
-if ($fail) {
+if (isset($fail)) {
 	showLog("安装失败");
 } else {
 	showLog("安装成功");
