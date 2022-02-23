@@ -36,8 +36,8 @@ class Api implements ApiInterface
      */
     function goPay($config, $out_trade_no, $subject, $body, $amount_cent)
     {
-        if (!isset($config['gateway'])) {
-            throw new \Exception('请填写 gateway');
+        if (!isset($config['api'])) {
+            throw new \Exception('请填写 api 地址');
         }
         if (!isset($config['app_id'])) {
             throw new \Exception('请填写 app_id');
@@ -58,7 +58,7 @@ class Api implements ApiInterface
 
         $data['sign'] = $this->sign($data, $config['app_secret']);
 
-        $ret_raw = CurlRequest::post($config['gateway'] . '/v1/gateway/fetch', http_build_query($data));
+        $ret_raw = CurlRequest::post($config['api'] . '/v1/gateway/fetch', http_build_query($data));
         $ret = @json_decode($ret_raw, true);
         if (!$ret || !isset($ret['code']) || $ret['code'] !== 200) {
             Log::error('Pay.MGate.goPay.order, request failed: ' . $ret_raw);
