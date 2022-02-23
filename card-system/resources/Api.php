@@ -60,7 +60,7 @@ class Api implements ApiInterface
 
         $ret_raw = CurlRequest::post($config['api'] . '/v1/gateway/fetch', http_build_query($data));
         $ret = @json_decode($ret_raw, true);
-        if (!$ret || !isset($ret['code']) || $ret['code'] !== 200) {
+        if (!$ret || !isset($ret['data'])) {
             Log::error('Pay.MGate.goPay.order, request failed: ' . $ret_raw);
             throw new \Exception(@$ret['message'] ?? '获取付款信息超时, 请刷新重试');
         }
